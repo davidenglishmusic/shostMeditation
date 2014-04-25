@@ -1,0 +1,136 @@
+<h2>Graphs for <%= @currentPieceName %></h2>
+
+<div id="pitches" style="width:50%; float:left;">
+<h3>Instances of pitches</h3>
+<div id="pitchChart"></div>
+</div>
+
+<div id="durations" style="width:50%; float:left;">
+<h3>Instances of durations</h3>
+<div id="durationChart"></div>
+</div>
+
+<div id="ditones" style="float:left;width:100%;">
+<h3>Instances of ditones</h3>
+<div id="ditonesChart">
+</div>
+</div>
+
+<div id="signatureMotive" style="float:left;width:100%;">
+<h3>Instances of Signature Motive</h3>
+<div id="signatureMotiveChart">
+</div>
+</div>
+
+</div>
+
+<script>
+$(window).load(function(){
+  new Morris.Line({
+  // ID of the element in which to draw the chart.
+    element: 'pitchChart',
+  // Allow the xkeys to be strings as opposed to time
+    parseTime: false,
+  // Chart data records -- each entry in this array corresponds to a point on
+  // the chart.
+    data: [
+      { pitch: 'C', value: <%= @pitchC %> },
+      { pitch: 'C#/Db', value: <%= @pitchCsharp %> },
+      { pitch: 'D', value: <%= @pitchD %> },
+      { pitch: 'D#/Eb', value: <%= @pitchDsharp %> },
+      { pitch: 'E', value: <%= @pitchE %> },
+      { pitch: 'F', value: <%= @pitchF %> },
+      { pitch: 'F#/Gb', value: <%= @pitchFsharp %> },
+      { pitch: 'G', value: <%= @pitchG %> },
+      { pitch: 'G#/Ab', value: <%= @pitchGsharp %> },
+      { pitch: 'A', value: <%= @pitchA %> },
+      { pitch: 'A#/Bb', value: <%= @pitchAsharp %> },
+      { pitch: 'B', value: <%= @pitchB %> }
+    ],
+  // The name of the data record attribute that contains x-values.
+    xkey: ['pitch'],
+  // A list of names of data record attributes that contain y-values.
+    ykeys: ['value'],
+  // Labels for the ykeys -- will be displayed when you hover over the
+  // chart.
+    labels: ['Value']
+  });
+
+  new Morris.Donut({
+  element: 'durationChart',
+  data: [
+    {label: "Whole Notes", value: <%= @duration1 %>},
+    {label: "Half Notes", value: <%= @duration2 %>},
+    {label: "Quarter Notes", value: <%= @duration4 %>},
+    {label: "Eighth Notes", value: <%= @duration8 %>},
+    {label: "Sixteenth Notes", value: <%= @duration16 %>},
+    {label: "Thirty-second note", value: <%= @duration32 %>},
+    {label: "Sixty-fourth note", value: <%= @duration64 %>}
+  ],
+  labelColor: '#F0F0F0',
+  colors: [
+    '#69D2E7',
+    '#A7DBD8',
+    '#E0E4CC',
+    '#F38630',
+    '#FA6900'
+  ]
+  });
+
+new Morris.Bar({
+  element: 'ditonesChart',
+  data: [
+    {x: 'm2', y: <%= @intervalm2 %>},
+    {x: 'M2', y: <%= @intervalM2 %>},
+    {x: 'm3', y: <%= @intervalm3 %>},
+    {x: 'M3', y: <%= @intervalM3 %>},
+    {x: 'P4', y: <%= @intervalP4 %>},
+    {x: 'TT', y: <%= @intervalTT %>},
+    {x: 'P5', y: <%= @intervalP5 %>},
+    {x: 'm6', y: <%= @intervalm6 %>},
+    {x: 'M6', y: <%= @intervalM6 %>},
+    {x: 'm7', y: <%= @intervalm7 %>},
+    {x: 'M7', y: <%= @intervalM7 %>},
+    {x: 'P8', y: <%= @intervalP8 %>}
+  ],
+  xkey: 'x',
+  ykeys: ['y'],
+  labels: ['Y'],
+  barColors: function (row, series, type) {
+    if (type === 'bar') {
+      var red = Math.ceil(255 * row.y / this.ymax);
+      return 'rgb(' + red + ',0,0)';
+    }
+    else {
+      return '#000';
+    }
+  }
+});
+
+new Morris.Bar({
+  element: 'signatureMotiveChart',
+  data: [
+    {x: 'Vocal Part', y: <%= @motiveVocal %>},
+    {x: 'Piano Part', y: <%= @motivePiano %>},
+    {x: 'All Parts', y: <%= @motiveAll %>}
+  ],
+  xkey: 'x',
+  ykeys: ['y'],
+  labels: ['Y'],
+  barColors: function (row, series, type) {
+    if (type === 'bar') {
+      var blue = Math.ceil(255 * row.y / this.ymax);
+      return 'rgb(0,0,' + blue + ')';
+    }
+    else {
+      return '#000';
+    }
+  }
+});
+
+
+});
+
+</script>
+
+
